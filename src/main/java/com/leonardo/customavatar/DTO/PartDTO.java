@@ -1,25 +1,17 @@
-package com.leonardo.customavatar.entity;
+package com.leonardo.customavatar.DTO;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @SuperBuilder
-@Table(name = "nose")
-public class Nose {
+public class PartDTO {
 
-    @Id
-    @GeneratedValue
     private Long id;
-
-    @Column(name = "type", nullable = false)
     private String type;
-
 }
