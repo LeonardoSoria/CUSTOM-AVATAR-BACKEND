@@ -1,45 +1,56 @@
 package com.leonardo.customavatar.controller;
 
+import com.leonardo.customavatar.DTO.LoginDTO;
+import com.leonardo.customavatar.DTO.UserDTO;
 import com.leonardo.customavatar.entity.User;
 import com.leonardo.customavatar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 public class UserController {
 
     @Autowired
-    private UserService patientService;
+    private UserService userService;
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/registerUser")
-    public User registerUser(@RequestBody User patient) {
-        return patientService.saveUser(patient);
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody UserDTO user) {
+        return ok(userService.saveUser(user));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO) {
+        return ok(userService.login(loginDTO.getUsername(), loginDTO.getPassword()));
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/updateUser")
-    public User updateUser(@RequestBody User patient) {
-        return patientService.updateUser(patient);
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        return ok(userService.updateUser(user));
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/getAllUsers")
-    public List<User> getAllUsers() {
-        return patientService.getUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ok(userService.getUsers());
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/getUser/{id}")
-    public User getUsersById(@PathVariable Long id) {
-        return patientService.getUserById(id);
+    public ResponseEntity<User> getUsersById(@PathVariable Long id) {
+        return ok(userService.getUserById(id));
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/deleteUser/{id}")
-    public User deleteUsers(@PathVariable Long id) {
-        return patientService.deleteUser(id);
+    public ResponseEntity<User> deleteUsers(@PathVariable Long id) {
+        return ok(userService.deleteUser(id));
     }
 }

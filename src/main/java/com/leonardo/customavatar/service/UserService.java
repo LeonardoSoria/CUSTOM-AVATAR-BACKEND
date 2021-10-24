@@ -1,5 +1,6 @@
 package com.leonardo.customavatar.service;
 
+import com.leonardo.customavatar.DTO.UserDTO;
 import com.leonardo.customavatar.entity.User;
 import com.leonardo.customavatar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,30 +12,38 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserRepository patientRepository;
+    private UserRepository userRepository;
 
-    public User saveUser(User user) {
-        return patientRepository.save(user);
+    public User saveUser(UserDTO user) {
+        return userRepository.save(User.builder()
+                .name(user.getName())
+                .lastname(user.getLastname())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .build());
+    }
+
+    public User login(String username, String password) {
+        return userRepository.findUserByUsernameAndPassword(username, password).stream().findFirst().orElse(null);
     }
 
     public List<User> getUsers() {
-        return patientRepository.findAll();
+        return userRepository.findAll();
     }
 
     public User getUserById(Long id) {
-        return patientRepository.findById(id).orElse(null);
+        return userRepository.findById(id).orElse(null);
     }
 
     public User updateUser(User user) {
-        User currentUser = patientRepository.findById(user.getId()).orElse(null);
+        User currentUser = userRepository.findById(user.getId()).orElse(null);
         currentUser.setName(user.getName());
         currentUser.setLastname(user.getLastname());
-        currentUser.setBirthdate(user.getBirthdate());
-        return patientRepository.save(currentUser);
+        return userRepository.save(currentUser);
     }
 
     public User deleteUser(Long id) {
-        patientRepository.deleteById(id);
+        userRepository.deleteById(id);
         return null;
     }
 
