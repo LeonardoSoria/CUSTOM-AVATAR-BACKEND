@@ -48,6 +48,15 @@ public class AvatarService {
                 .build());
     }
 
+    public boolean deleteAvatar(Long avatarId) {
+        try {
+            avatarRepository.deleteById(avatarId);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public List<Face> getAllFaces() {
         return faceRepository.findAll();
     }

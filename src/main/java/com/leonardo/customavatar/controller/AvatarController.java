@@ -25,6 +25,12 @@ public class AvatarController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/deleteAvatar")
+    public ResponseEntity<Boolean> deleteAvatar(@RequestParam Long avatarId) {
+        return ok(avatarService.deleteAvatar(avatarId));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/getAvatarsByUserId")
     public ResponseEntity<List<AvatarGetDTO>> getAvatarsByUserId(@RequestParam long userId) {
         return ok(avatarService.getAvatarByUserId(userId));
